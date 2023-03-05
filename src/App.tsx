@@ -14,7 +14,6 @@ function App() {
   const [showIngredients, setShowIngredients] = useState<boolean>(false)
   const [diet, setDiet] = useState<HealthType>('')
 
-  const ingredientsRef = useRef<HTMLDivElement>(null)
 
 
   const handleClick = async () => {
@@ -40,23 +39,19 @@ function App() {
       console.log(error)
     }
 
+    setShowIngredients(false)
+
   }
 
   const handleShowIngredientsClick = () => {
     setShowIngredients(!showIngredients)
-    
-    if (ingredientsRef.current) {
-      window.scrollTo({
-        top: ingredientsRef.current.offsetTop,
-        behavior: "smooth"
-      });
-    }
   }
   
 
   return (
     <div className="App">
       <div className='outer-container'>
+        <p className='title'>Never Again without Ideas!</p>
         <div className='search-container'>
           <input
             onChange={(e) => setIngredients(e.target.value)}
@@ -82,12 +77,12 @@ function App() {
           <button className='first-button' onClick={handleClick}>Get a random Recipe</button>
         </div>
         {Object.values(currRecipe).length > 1 && 
-          <div ref={ingredientsRef} className="scroll-container">
+          <div className="scroll-container">
             <p>{currRecipe.label}</p>
-            <p>{`Calories: ${Math.floor(currRecipe.calories!)}`}</p>
-            <p>{`Fat: ${Math.floor(currRecipe.digest?.find(dig => dig.label === "Fat")?.total!)}`}</p>
-            <p>{`Carbs: ${Math.floor(currRecipe.digest?.find(dig => dig.label === "Carbs")?.total!)}`}</p>
-            <p>{`Protein: ${Math.floor(currRecipe.digest?.find(dig => dig.label === "Protein")?.total!)}`}</p>
+            <p>{`Calories: ${Math.floor(currRecipe.calories!)} kcal`}</p>
+            <p>{`Fat: ${Math.floor(currRecipe.digest?.find(dig => dig.label === "Fat")?.total!)} g`}</p>
+            <p>{`Carbs: ${Math.floor(currRecipe.digest?.find(dig => dig.label === "Carbs")?.total!)} g`}</p>
+            <p>{`Protein: ${Math.floor(currRecipe.digest?.find(dig => dig.label === "Protein")?.total!)} g`}</p>
             <img src={currRecipe.image} alt={currRecipe.label} />
             <button onClick={handleShowIngredientsClick}>{!showIngredients ? "Show Ingredients" : "Hide Ingredients"}</button>
             {showIngredients && (
