@@ -3,6 +3,7 @@ export type RecipeDTO = {
     cautions: string[]
     cuisineType: string[]
     dietLabels: string[]
+    digest: DigestType[]
     dishType: string[]
     healthLabels: string[]
     image: string
@@ -10,7 +11,8 @@ export type RecipeDTO = {
     ingredients: IngredientType[]
     label: string
     mealType: string
-    
+    url: string
+
 }
 
 type IngredientType = {
@@ -19,4 +21,15 @@ type IngredientType = {
     measure: string
     food: string
     weight: number
+}
+
+type DigestType = {
+    label: string
+    daily: number
+    hasRDI: boolean
+    schemaOrgTag: string
+    sub: DigestType[]
+    tag: string
+    total: number
+    unit: string
 }

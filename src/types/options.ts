@@ -12,9 +12,9 @@ export type OptionsType = {
     }
 }
 
-type HealthType = 
+export type HealthType = 
     "crustacean-free" | "dairy-free" | "gluten-free" | "low-sugar" | 
-    "peanut-free" | "pescatarian" | "vegan" | "vegetarian"
+    "peanut-free" | "pescatarian" | "vegan" | "vegetarian" | ""
 
 type MealTypeType = "Breakfast" | "Dinner" | "Lunch"
 
