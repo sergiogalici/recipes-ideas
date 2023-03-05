@@ -5,7 +5,7 @@ export type OptionsType = {
         app_id: string
         app_key: string
         ingr: string
-        mealType: MealTypeType
+        mealType?: MealTypeType
         random: boolean
         health?: HealthType
         diet?: DietType

@@ -13,17 +13,34 @@ function App() {
   const [ingredients, setIngredients] = useState<string>("")
   const [showIngredients, setShowIngredients] = useState<boolean>(false)
   const [showFacts, setShowFacts] = useState<boolean>(false)
-  const [diet, setDiet] = useState<HealthType>('')
+  const [diet, setDiet] = useState<HealthType>("")
+  const [min, setMin] = useState<string>("0")
+  const [max, setMax] = useState<string>("0")
 
 
 
   const handleClick = async () => {
+    let ingr
+
+    if (min !=="0" && max !=="0") {
+      ingr = `${min}-${max}`
+    }
+
+    if (min !=="0" && max ==="0") {
+      ingr = `${min}+`
+    }
+
+    if (min ==="0" && max !== "0") {
+      ingr = `${max}`
+    }
+
+    console.log("INGR = ", ingr)
+
     const optionsToSend: OptionsType = {
       params: {
         app_id: appId,
         app_key: appKey,
-        ingr: "1+",
-        mealType: "Lunch",
+        ingr: ingr ?? "1+",
         q: ingredients,
         random: true,
         type:'public',
@@ -74,12 +91,29 @@ function App() {
               <option value="dairy-free">Dairy-Free</option>
               <option value="gluten-free">Gluten-Free</option>
               <option value="peanut-free">Peanut-Free</option>
-              <option value="gluten-free">Gluten-Free</option>
               <option value="pescatarian">Pescatarian</option>
               <option value="low-sugar">Low-Sugar</option>
             </select>
             {diet ? <p>You selected {diet}.</p> : <p>No diet selected</p>}
-      </div>
+          </div>
+          <div className='min-max-container'>
+          <p>Insert minimum amount of ingredients:</p>
+          <input
+            onChange={(e) => e.target.value && setMin(e.target.value)}
+            value={min}
+            placeholder='Insert min ingredients'
+            type="number"
+            min={0}
+          />
+          <p>Insert maximum amount of ingredients:</p>
+          <input
+            onChange={(e) => e.target.value && setMax(e.target.value)}
+            value={max}
+            placeholder='Insert max ingredients'
+            type="number"
+            min={0}
+          />
+          </div>
           <button className='first-button' onClick={handleClick}>Get a random Recipe</button>
         </div>
         {Object.values(currRecipe).length > 1 && 
