@@ -4,8 +4,8 @@ import { RecipeDTO } from './DTOs/recipeDTO';
 import { OptionsType } from './types/options';
 import { callToApi } from './utils/apiCall';
 
-const appId = '3e0dcf1f'
-const appKey = '907329a176af370d34c9b7bb889ac7c5'
+const appId = process.env.REACT_APP_EDAMAM_APP_ID
+const appKey = process.env.REACT_APP_EDAMAM_APP_KEY
 
 
 function App() {
@@ -14,8 +14,8 @@ function App() {
   const handleClick = () => {
     const optionsToSend: OptionsType = {
       params: {
-        app_id: appId,
-        app_key: appKey,
+        app_id: appId!,
+        app_key: appKey!,
         ingr: "3+",
         mealType: "Lunch",
         q: "ricotta, lemon",
