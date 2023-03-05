@@ -12,6 +12,7 @@ function App() {
   const [currRecipe, setCurrRecipe] = useState<Partial<RecipeDTO>>({})
   const [ingredients, setIngredients] = useState<string>("")
   const [showIngredients, setShowIngredients] = useState<boolean>(false)
+  const [showFacts, setShowFacts] = useState<boolean>(false)
   const [diet, setDiet] = useState<HealthType>('')
 
 
@@ -21,7 +22,7 @@ function App() {
       params: {
         app_id: appId,
         app_key: appKey,
-        ingr: "3+",
+        ingr: "1+",
         mealType: "Lunch",
         q: ingredients,
         random: true,
@@ -40,11 +41,16 @@ function App() {
     }
 
     setShowIngredients(false)
+    setShowFacts(false)
 
   }
 
   const handleShowIngredientsClick = () => {
     setShowIngredients(!showIngredients)
+  }
+
+  const handleShowFacts = () => {
+    setShowFacts(!showFacts)
   }
   
 
@@ -79,10 +85,6 @@ function App() {
         {Object.values(currRecipe).length > 1 && 
           <div className="scroll-container">
             <p>{currRecipe.label}</p>
-            <p>{`Calories: ${Math.floor(currRecipe.calories!)} kcal`}</p>
-            <p>{`Fat: ${Math.floor(currRecipe.digest?.find(dig => dig.label === "Fat")?.total!)} g`}</p>
-            <p>{`Carbs: ${Math.floor(currRecipe.digest?.find(dig => dig.label === "Carbs")?.total!)} g`}</p>
-            <p>{`Protein: ${Math.floor(currRecipe.digest?.find(dig => dig.label === "Protein")?.total!)} g`}</p>
             <img src={currRecipe.image} alt={currRecipe.label} />
             <button onClick={handleShowIngredientsClick}>{!showIngredients ? "Show Ingredients" : "Hide Ingredients"}</button>
             {showIngredients && (
@@ -91,6 +93,15 @@ function App() {
                 {currRecipe.ingredients?.map((ingr, index) => (
                   <p key={index}>{ingr.text}</p>
                 ))}
+              </>
+            )}
+            <button onClick={handleShowFacts}>{!showFacts ? "Show Nutrition facts" : "Hide Nutrition facts"}</button>
+            {showFacts && (
+              <>
+                <p>{`Calories: ${Math.floor(currRecipe.calories!)} kcal`}</p>
+                <p>{`Fat: ${Math.floor(currRecipe.digest?.find(dig => dig.label === "Fat")?.total!)} g`}</p>
+                <p>{`Carbs: ${Math.floor(currRecipe.digest?.find(dig => dig.label === "Carbs")?.total!)} g`}</p>
+                <p>{`Protein: ${Math.floor(currRecipe.digest?.find(dig => dig.label === "Protein")?.total!)} g`}</p>
               </>
             )}
             <a rel="noreferrer" target="_blank" href={currRecipe.url}>Link to the recipe</a>
